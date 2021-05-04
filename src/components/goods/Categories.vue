@@ -7,7 +7,8 @@
     </el-breadcrumb>
     <el-card>
         <el-button type="primary" @click="showAddCateDialog">添加分类</el-button>
-        <tree-table :data="cateList" :columns="columns" :expand-type="false" :selection-type="false">
+        <!-- 树形表格控件 不展开 去掉复选框 -->
+        <tree-table :data="cateList" :columns="columns" :expand-type="false" :selection-type="false" show-index border>
             <template slot="cat_deleted" slot-scope="scope">
                 <i class="el-icon-success" v-if="scope.row.cat_deleted === false"></i>
                 <i class="el-icon-error" v-else></i>
@@ -27,6 +28,7 @@
                 <el-button type="warning" size="mini" icon="el-icon-setting"></el-button>
             </template>
         </tree-table>
+        <!-- 分页区域 -->
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="queryInfo.pagenum" :page-sizes="[1, 2, 3, 4, 5]" :page-size="queryInfo.pagesize" layout="total, sizes, prev, pager, next, jumper" :total="total">
         </el-pagination>
     </el-card>
@@ -60,16 +62,18 @@ export default {
       addCateForm: {
         cat_name: '', // 分类名称值
         cat_pid: 0, // 父级分类id值
-        cat_level: 0 // 0 表示1级分类 1表示2级 没有选值就是0 选了数组长度刚好是level
+        cat_level: 0 // 分类当前层级 0 表示1级分类 1表示2级 没有选值就是0 选了数组长度刚好是level
       },
       addCateDialogVisible: false,
+      // 查询条件
       queryInfo: {
         type: 3,
         pagenum: 1,
         pagesize: 5
       },
+      // 商品分类数据列表 默认为空
       cateList: [],
-      total: 0,
+      total: 0, // 总数据条数
       columns: [{
         label: '分类名称',
         prop: 'cat_name'
@@ -77,8 +81,8 @@ export default {
       {
         label: '是否有效',
         prop: 'cat_deleted',
-        type: 'template', // 模板列
-        template: 'cat_deleted' // 模板名称
+        type: 'template', // 表示将当前列定义为模板列
+        template: 'cat_deleted' // 当前列使用模板名称
       },
       {
         label: '排序',
@@ -141,7 +145,7 @@ export default {
       }
       console.log(this.addCateForm)
     },
-    // 获取列表信息
+    // 获取商品分类信息
     async getCateList () {
       const {
         data: res

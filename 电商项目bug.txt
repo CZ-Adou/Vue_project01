@@ -1,0 +1,42 @@
+1. 
+const routes = [
+  { path: '/', redirect: '/login' },
+  { path: '/login', component: Login }
+
+component 不带s       
+
+import Login from '../components/Login.vue'   引入文件路径带s
+
+2.登录失败
+
+// 电商项目线上地址
+// axios.defaults.baseURL = 'http://42.192.71.221:8889/api/private/v1/'
+https://www.escook.cn/vue-shop/#/login
+
+// axios 拦截器地址
+https://www.kancloud.cn/yunye/axios/234845
+
+axios.interceptors.request.use(function (config) {
+  const token = window.sessionStorage.getItem('token')
+  if (token) {
+    config.headers.Authorization = token
+  }
+  // 在发送请求之前做些什么
+  return config
+}, function (error) {
+  // 对请求错误做些什么
+  return Promise.reject(error)
+})
+
+3. form 和 from 不能写错
+
+4.ESlint  编码规范
+
+// 表单校验规则
+el-form 绑定 ref="addFormRef"  :model=“addForm” :rules="addFormRules"   校验规则  表单数据
+el-form-item 绑定 prop ="username "    属性值
+el-input 绑定   addForm.username     表单具体的属性名
+
+ 6.ref 绑定 属性名  vue自带的 this.$refs. 获取实例对象
+
+5.native  nextTick(微任务)

@@ -8,3 +8,23 @@
     <el-card>123</el-card>
   </div>
 </template>
+
+<script>
+export default {
+  data () {
+    return {
+
+    }
+  },
+  methods: {
+
+  },
+  computed: {
+
+  }
+}
+</script>
+
+<style scoped>
+
+</style>
